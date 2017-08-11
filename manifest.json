@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "xdebug-webextension",
+  "version": "0.1.0",
+  "description": "",
+  "homepage_url": "https://github.com/bash/xdebug-webextension",
+  "permissions": [
+    "tabs",
+    "cookies",
+    "<all_urls>"
+  ],
+  "page_action": {
+    "default_icon": "icon.svg",
+    "default_title": "Enable Xdebug"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
