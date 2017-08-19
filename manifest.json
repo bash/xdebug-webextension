@@ -7,13 +7,15 @@
   "permissions": [
     "tabs",
     "cookies",
-    "<all_urls>"
+    "storage",
+    "https://*/*",
+    "http://*/*"
   ],
   "icons": {
-    "128": "icon.svg"
+    "128": "icons/icon.svg"
   },
   "page_action": {
-    "default_icon": "icon.svg",
+    "default_icon": "icons/icon.svg",
     "default_title": "Enable Xdebug"
   },
   "options_ui": {
@@ -22,5 +24,6 @@
   },
   "background": {
     "scripts": ["background.js"]
-  }
+  },
+  "default_locale": "en"
 }

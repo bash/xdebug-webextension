@@ -1,0 +1,8 @@
+{
+  "disableTooltip": {
+    "message": "Disable Xdebug"
+  },
+  "enableTooltip": {
+    "message": "Enable Xdebug"
+  }
+}
