@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "lint": "web-ext lint"
+    "lint": "eslint . && web-ext lint"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,8 @@
   },
   "homepage": "https://github.com/bash/xdebug-webextension#readme",
   "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-plugin-promise": "^3.5.0",
     "web-ext": "^2.0.0"
   }
 }
