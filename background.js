@@ -7,13 +7,13 @@ const { getMessage } = browser.i18n
 
 const getIdeKey = () => {
   return browser.storage.local
-                .get({ ideKey: '' })
-                .then(({ ideKey }) => ideKey)
+    .get({ ideKey: '' })
+    .then(({ ideKey }) => ideKey)
 }
 
 const isDebugEnabled = (tab) => {
   return browser.cookies.get({ url: tab.url, name: COOKIE })
-                        .then((cookie) => cookie != null)
+    .then((cookie) => cookie != null)
 }
 
 const disableDebug = (tab) => {

@@ -1,18 +1,17 @@
 (async () => {
-
   'use strict'
 
   const getIdeKey = () => {
     return browser.storage.local
-                  .get({ ideKey: '' })
-                  .then(({ ideKey }) => ideKey)
+      .get({ ideKey: '' })
+      .then(({ ideKey }) => ideKey)
   }
 
   const getIsCustom = (value, $select) => {
     if (value === '') return true
-    
+
     return !Array.from($select.options)
-                .find(($option) => $option.value === value)
+      .find(($option) => $option.value === value)
   }
 
   const render = (ideKey, $select, $input) => {
