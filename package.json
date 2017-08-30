@@ -1,0 +1,21 @@
+{
+  "name": "@rschmidmeister/xdebug-webextension",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "lint": "web-ext lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bash/xdebug-webextension.git"
+  },
+  "author": "Ruben Schmidmeister",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bash/xdebug-webextension/issues"
+  },
+  "homepage": "https://github.com/bash/xdebug-webextension#readme",
+  "devDependencies": {
+    "web-ext": "^2.0.0"
+  }
+}
