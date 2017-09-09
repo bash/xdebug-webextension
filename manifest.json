@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Xdebug Helper",
-  "version": "0.1.0",
+  "name": "Xdebug Button",
+  "version": "0.1.2",
   "description": "",
   "homepage_url": "https://github.com/bash/xdebug-webextension",
   "permissions": [
@@ -27,7 +27,7 @@
   "default_locale": "en",
   "applications": {
     "gecko": {
-      "id": "xdebug-helper@rubys.ninja"
+      "id": "xdebug-button@rubys.ninja"
     }
   }
 }
