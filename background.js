@@ -38,6 +38,11 @@ const updatePageActionState = (tabId, isEnabled) => {
 }
 
 browser.tabs.onUpdated.addListener(async (tabId, _, tab) => {
+  const { protocol } = new window.URL(tab.url);
+
+  // do not show page action on special browser pages
+  if (protocol !== 'http:' && protocol !== 'https:') return
+
   const isEnabled = await isDebugEnabled(tab)
 
   browser.pageAction.show(tabId)
