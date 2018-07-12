@@ -16,8 +16,8 @@
   },
   "homepage": "https://github.com/bash/xdebug-webextension#readme",
   "devDependencies": {
-    "eslint": "^4.5.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "web-ext": "^2.0.0"
+    "eslint": "^5.1.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "web-ext": "^2.7.0"
   }
 }
