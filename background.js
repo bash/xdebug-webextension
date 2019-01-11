@@ -13,6 +13,10 @@ const wrapAsyncFn = (fn) => {
   }
 }
 
+const isSubdomain = (otherDomain, baseDomain) => {
+  return otherDomain === baseDomain || otherDomain.endsWith(`.${baseDomain}`)
+}
+
 const getIdeKey = () => {
   return browser.storage.local
     .get({ ideKey: '' })
@@ -20,45 +24,61 @@ const getIdeKey = () => {
 }
 
 const isDebugEnabled = async (tab) => {
-  const url = new window.URL(tab.url)
-
-  const cookie = await browser.cookies.get({
-    url: tab.url,
-    name: COOKIE,
-    firstPartyDomain: url.hostname,
-  })
-
-  return cookie != null
+  const cookies = await getCookie(tab)
+  return cookies != null
 }
 
-const disableDebug = (tab) => {
-  const url = new window.URL(tab.url)
+const getCookie = async (tab) => {
+  const { url } = tab
+  const parsedUrl = new window.URL(url)
 
-  return browser.cookies.remove({ url: tab.url, firstPartyDomain: url.hostname, name: COOKIE })
+  const cookies = await browser.cookies.getAll({
+    url,
+    name: COOKIE,
+    firstPartyDomain: null,
+  })
+
+  const cookieWithMatchingFirstPartyDomain = cookies.find((cookie) => {
+    return cookie.firstPartyDomain === '' || isSubdomain(parsedUrl.hostname, cookie.firstPartyDomain)
+  })
+
+  return cookieWithMatchingFirstPartyDomain
+}
+
+const disableDebug = async (tab) => {
+  const cookie = await getCookie(tab)
+
+  if (cookie != null) {
+    await browser.cookies.remove({
+      url: tab.url,
+      name: COOKIE,
+      firstPartyDomain: cookie.firstPartyDomain,
+    })
+  }
 }
 
 const enableDebug = async (tab) => {
   const ideKey = await getIdeKey()
-  const url = new window.URL(tab.url)
 
-  return browser.cookies.set({
-    url: tab.url,
-    firstPartyDomain: url.hostname,
+  await browser.tabs.sendMessage(tab.id, {
+    action: 'setCookie',
     name: COOKIE,
     value: ideKey,
     path: '/',
   })
 }
 
-// TODO: rewrite
 const updatePageActionState = (tabId, isEnabled) => {
   if (isEnabled) {
-    browser.pageAction.setTitle({ title: getMessage('disableTooltip'), tabId })
-    browser.pageAction.setIcon({ path: 'icons/icon-active.svg', tabId })
+    setPageActionInfo(tabId, { title: getMessage('disableTooltip'), icon: 'icons/icon-active.svg' })
   } else {
-    browser.pageAction.setTitle({ title: getMessage('enableTooltip'), tabId })
-    browser.pageAction.setIcon({ path: 'icons/icon.svg', tabId })
+    setPageActionInfo(tabId, { title: getMessage('enableTooltip'), icon: 'icons/icon.svg' })
   }
+}
+
+const setPageActionInfo = (tabId, { title, icon }) => {
+  browser.pageAction.setTitle({ tabId, title })
+  browser.pageAction.setIcon({ tabId, path: icon })
 }
 
 browser.tabs.onUpdated.addListener(wrapAsyncFn(async (tabId, _, tab) => {
